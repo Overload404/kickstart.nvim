@@ -205,6 +205,21 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+vim.api.nvim_create_autocmd('TermOpen', {
+  group = vim.api.nvim_create_augroup('custom-term-open', { clear = true }),
+  callback = function()
+    vim.opt.number = false
+    vim.opt.relativenumber = false
+  end,
+})
+
+vim.keymap.set('n', '<space>st', function()
+  vim.cmd.vnew()
+  vim.cmd.term()
+  vim.cmd.wincmd 'J'
+  vim.api.nvim_win_set_height(0, 15)
+end)
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -257,6 +272,7 @@ require('lazy').setup({
     },
   },
 
+  { 'lambdalisue/vim-suda', priority = 1000 },
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
   -- This is often very useful to both group configuration, as well as handle
@@ -839,11 +855,19 @@ require('lazy').setup({
     -- change the command in the config to whatever the name of that colorscheme is.
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'rose-pine/neovim',
-    name = 'rose-pine',
+    -- 'rose-pine/neovim',
+    -- name = 'rose-pine',
+    -- config = function()
+    --   require('rose-pine').setup {
+    --     variant = 'moon',
+    --   }
+    -- end,
+    'ellisonleao/gruvbox.nvim',
+    name = 'gruvbox',
     config = function()
-      require('rose-pine').setup {
-        variant = 'moon',
+      require('gruvbox').setup {
+        terminal_colors = true,
+        contrast = 'soft',
       }
     end,
     priority = 1000, -- Make sure to load this before all the other start plugins.
@@ -851,7 +875,7 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'rose-pine'
+      vim.cmd.colorscheme 'gruvbox'
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'

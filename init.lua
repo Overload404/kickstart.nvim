@@ -9,6 +9,19 @@ vim.g.have_nerd_font = true
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
 
+-- NOTE: Some syntax or plugins (like treesitter or vim-markdown) mark certain characters or syntax groups
+-- with the conceal attribute. The conceallevel setting determines how much of that marked text
+-- gets hidden or replaced.
+--
+--
+-- | `conceallevel` | Effect                                                                 |
+-- | -------------- | ---------------------------------------------------------------------- |
+-- | `0`            | Concealing is **disabled**. All text is shown normally.                |
+-- | `1`            | Concealed text is hidden, but **cursor line shows full text**.         |
+-- | `2`            | Concealed text is **always hidden**, even under the cursor.            |
+-- | `3`            | Concealed text is **replaced with a substitute character** (see below) |
+vim.opt.conceallevel = 1
+
 -- Make line numbers default
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
